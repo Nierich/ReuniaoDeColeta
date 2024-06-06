@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Reunião de coleta</string>
+    <string name="nome_projeto">Digite o nome do projeto:</string>
+    <string name="btn_data_inicio">Data de inicio</string>
+    <string name="bt_data_fim">Data de fim</string>
+    <string name="bt_criar">Criar Projeto</string>
+    <string name="tv_boas_vindas">Bem vindo ao projeto!!</string>
+    <string name="tv_cadastro_projeto">Cadastro de projetos</string>
+    <string name="tv_cadastro_requisito">Cadastro de requisitos</string>
+    <string name="tv_descricao_requisito">Descrição:</string>
+    <string name="tv_requisito_tipo">Tipo:</string>
+    <string name="tv_importancia_requisito">Importancia:</string>
+    <string name="tv_dificuldade_requisito">Dificuldade:</string>
+    <string name="tv_horas_estimadas_requisito">Horas estimadas:</string>
+    <string name="tv_desenvolvedores_requisito">Desenvolvedores:</string>
+    <string name="bt_criar_requisito">Criar</string>
+    <string-array name="spinner_tipo_requisito">
+        <item>Não-Funcional</item>
+        <item>Funcional</item>
+    </string-array>
+    <string-array name="spinner_desenvolvedores_requisito">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="spinner_importancia_requisito">
+        <item>Baixa</item>
+        <item>Média</item>
+        <item>Alta</item>
+    </string-array>
+    <string-array name="spinner_dificuldade_requisito">
+        <item>Baixa</item>
+        <item>Média</item>
+        <item>Alta</item>
+    </string-array>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu" android:title="Menu" app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/projeto_item" android:title="Projeto" app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/cadastroProjeto" android:title="Cadastro de projeto"/>
+            <item android:id="@+id/listagemProjeto" android:title="Listagem de projetos"/>
+        </menu>
+    </item>
+
+    <item android:id="@+id/requisitos_item" android:title="Requisitos" app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/cadastroRequisito" android:title="Cadastro de requisitos"/>
+            <item android:id="@+id/listagemRequisito" android:title="Listagem de requisitos"/>
+        </menu>
+    </item>
+</menu>
