@@ -1,4 +1,4 @@
-package com.example.reuniaodecoleta;
+package com.example.reuniaodecoleta.TelaRequisito;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +9,10 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Requisito extends AppCompatActivity {
+import com.example.reuniaodecoleta.BaseActivity;
+import com.example.reuniaodecoleta.R;
+
+public class CadastroRequisito extends BaseActivity {
 
     private EditText etDescricao = null;
     private Spinner spn_tipo = null;
@@ -22,6 +25,8 @@ public class Requisito extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_requisito);
+
+        setUpToolbar(R.id.myToolbar);
 
         etDescricao = (EditText) findViewById(R.id.et_descricao_requisito);
         et_horas = (EditText) findViewById(R.id.et_horas_estimadas);
@@ -50,7 +55,7 @@ public class Requisito extends AppCompatActivity {
                         "Desenvolvedores: " + desenvolvedores;
 
 
-                new AlertDialog.Builder(Requisito.this)
+                new AlertDialog.Builder(CadastroRequisito.this)
                         .setTitle("Informações do Requisito")
                         .setMessage(mensagem)
                         .setPositiveButton(android.R.string.ok, (dialog, which) -> {

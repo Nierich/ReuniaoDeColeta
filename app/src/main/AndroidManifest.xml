@@ -21,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Projeto" />
-        <activity android:name=".ListagemProjeto" />
-        <activity android:name=".Requisito" />
-        <activity android:name=".ListagemRequisito" />
+        <activity android:name=".TelaProjeto.CadastroProjeto" />
+        <activity android:name=".TelaProjeto.ListagemProjeto" />
+        <activity android:name=".TelaRequisito.CadastroRequisito" />
+        <activity android:name=".TelaRequisito.ListagemRequisito" />
     </application>
 
 </manifest>

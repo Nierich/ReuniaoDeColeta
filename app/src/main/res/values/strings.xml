@@ -14,6 +14,7 @@
     <string name="tv_horas_estimadas_requisito">Horas estimadas:</string>
     <string name="tv_desenvolvedores_requisito">Desenvolvedores:</string>
     <string name="bt_criar_requisito">Criar</string>
+    <string name="nome_Projeto">Projeto:</string>
     <string-array name="spinner_tipo_requisito">
         <item>Não-Funcional</item>
         <item>Funcional</item>
