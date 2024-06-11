@@ -65,7 +65,8 @@ public class Projeto extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Projeto.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        dataInicio.setText(String.valueOf(day) + "/" + String.valueOf(month+1) + "/" + String.valueOf(year));
+                        String formattedDate = String.format("%02d/%02d/%04d", day, month + 1, year);
+                        dataInicio.setText(formattedDate);
                     }
                 }, 2024, 5, 5);
                 datePickerDialog.show();
@@ -79,7 +80,8 @@ public class Projeto extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Projeto.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        dataFim.setText(String.valueOf(day) + "/" + String.valueOf(month+1) + "/" + String.valueOf(year));
+                        String formattedDate = String.format("%02d/%02d/%04d", day, month + 1, year);
+                        dataFim.setText(formattedDate);
                     }
                 }, 2024, 5, 5);
                 datePickerDialog.show();
