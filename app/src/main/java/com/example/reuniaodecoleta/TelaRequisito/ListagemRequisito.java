@@ -43,7 +43,8 @@ public class ListagemRequisito extends BaseActivity {
         String[] campos_item = {"id", "descricao", "data_hora_registro", "tipo", "nivel_importancia", "nivel_dificuldade", "horas_estimadas", "qntd_desenvolvedores", "projeto_id"};
         String whereClause = "projeto_id = ?";
         String[] whereArgs = {codigo};
-        listarequisito = bancoDeDados.query("requisito", campos_item, whereClause, whereArgs, null, null, null);
+        String orderBy = "tipo";
+        listarequisito = bancoDeDados.query("requisito", campos_item, whereClause, whereArgs, null, null, orderBy);
 
             listarequisito.moveToFirst();
 
