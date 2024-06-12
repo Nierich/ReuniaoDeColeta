@@ -12,7 +12,6 @@
     <item android:id="@+id/requisitos_item" android:title="Requisitos" >
         <menu>
             <item android:id="@+id/cadastroRequisito" android:title="Cadastro de requisitos"/>
-            <item android:id="@+id/listagemRequisito" android:title="Listagem de requisitos"/>
         </menu>
     </item>
     <item android:id="@+id/voltar" android:title="Voltar" app:showAsAction="never"/>

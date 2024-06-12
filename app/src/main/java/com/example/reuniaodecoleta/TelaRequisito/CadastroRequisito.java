@@ -98,7 +98,7 @@ public class CadastroRequisito extends BaseActivity {
         ContentValues valores = criarContentValuesParaRequisito(requisito);
 
         long resultado = bancoDeDados.insert("requisito", null, valores);
-        bancoDeDados.close();
+
 
         if (resultado != -1) {
             Toast.makeText(CadastroRequisito.this, "Requisito criado com sucesso!", Toast.LENGTH_LONG).show();
@@ -118,7 +118,7 @@ public class CadastroRequisito extends BaseActivity {
         valores.put("qntd_desenvolvedores", requisito.getQntd_desenvolvedores());
         // Insere o projeto selecionado pelo usuário
         Projeto projetoSelecionado = (Projeto) spn_projeto.getSelectedItem();
-        valores.put("id_categoria", projetoSelecionado.getId());
+        valores.put("projeto_id", projetoSelecionado.getId());
         return valores;
     }
 

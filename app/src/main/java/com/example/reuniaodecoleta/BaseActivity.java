@@ -50,10 +50,6 @@ public class BaseActivity extends AppCompatActivity {
             startActivity(new Intent(this, CadastroRequisito.class));
             Toast.makeText(this, "Menu de Cadastro selecionado", Toast.LENGTH_LONG).show();
             return true;
-        } else if (item.getItemId() == R.id.listagemRequisito) {
-            startActivity(new Intent(this, ListagemRequisito.class));
-            Toast.makeText(this, "Menu de listagem selecionado", Toast.LENGTH_LONG).show();
-            return true;
         } else if (item.getItemId() == R.id.voltar) {
             finish();
             return true;
