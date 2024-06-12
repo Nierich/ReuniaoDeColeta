@@ -2,6 +2,8 @@ package com.example.reuniaodecoleta.TelaProjeto;
 
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +15,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.reuniaodecoleta.BaseActivity;
+import com.example.reuniaodecoleta.DatabaseManager;
+import com.example.reuniaodecoleta.Entidade.Projeto;
 import com.example.reuniaodecoleta.R;
 
 public class CadastroProjeto extends BaseActivity {
     private EditText etNome = null;
     private TextView dataInicio = null;
     private TextView dataFim = null;
+    private SQLiteDatabase bancoDeDados;
+    private DatabaseManager dataBaseManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,12 @@ public class CadastroProjeto extends BaseActivity {
 
         setUpToolbar(R.id.myToolbar);
 
+        // Inicializa o DatabaseManager e o banco de dados
+        dataBaseManager = new DatabaseManager(this, "aplicacaodb", 1);
+        bancoDeDados = dataBaseManager.getWritableDatabase();
+
+
+        int idCliente = 0;
         etNome = findViewById(R.id.et_nome_projeto);
         dataInicio = findViewById(R.id.tv_data_inicio);
         dataFim = findViewById(R.id.tv_data_fim);
@@ -39,26 +52,15 @@ public class CadastroProjeto extends BaseActivity {
                 String data_inicio = dataInicio.getText().toString();
                 String data_fim = dataFim.getText().toString();
 
-                if (nomeProjeto.isEmpty() && data_inicio.isEmpty() && data_fim.isEmpty()) {
-                    Toast.makeText(CadastroProjeto.this, "Por favor, preencha os campos!!", Toast.LENGTH_LONG).show();
-                } else if (nomeProjeto.isEmpty()) {
-                    Toast.makeText(CadastroProjeto.this, "Por favor, coloque um nome no seu projeto!!", Toast.LENGTH_LONG).show();
-                } else if (data_inicio.isEmpty()) {
-                    Toast.makeText(CadastroProjeto.this, "Por favor, coloque uma data de inicio no seu projeto!!", Toast.LENGTH_LONG).show();
-                } else if (data_fim.isEmpty()) {
-                    Toast.makeText(CadastroProjeto.this, "Por favor, coloque uma data de fim no seu projeto!!", Toast.LENGTH_LONG).show();
+                if (nomeProjeto.isEmpty() || data_inicio.isEmpty() || data_fim.isEmpty()) {
+                    Toast.makeText(CadastroProjeto.this, "Por favor, preencha todos os campos!", Toast.LENGTH_LONG).show();
                 } else {
+                    Projeto projeto = new Projeto();
+                    projeto.setNome(nomeProjeto);
+                    projeto.setData_inicio(data_inicio);
+                    projeto.setData_fim(data_fim);
 
-                    String mensagem = "Nome do projeto: " + nomeProjeto + "\n" +
-                            "Data de inicio do projeto: " + data_inicio + "\n" +
-                            "Data do fim do projeto: " + data_fim;
-
-                    new AlertDialog.Builder(CadastroProjeto.this)
-                            .setTitle("Informações do Projeto")
-                            .setMessage(mensagem)
-                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                            })
-                            .show();
+                    salvarProjetoNoBanco(projeto);
                 }
             }
         });
@@ -92,5 +94,21 @@ public class CadastroProjeto extends BaseActivity {
                 datePickerDialog.show();
             }
         });
+    }
+
+    private void salvarProjetoNoBanco(Projeto projeto) {
+        ContentValues valores = new ContentValues();
+        valores.put("nome", projeto.getNome());
+        valores.put("data_inicio", projeto.getData_inicio());
+        valores.put("data_fim", projeto.getData_fim());
+
+        long resultado = bancoDeDados.insert("projeto", null, valores);
+        bancoDeDados.close();
+
+        if (resultado != -1) {
+            Toast.makeText(CadastroProjeto.this, "Projeto criado com sucesso!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(CadastroProjeto.this, "Erro ao criar projeto!", Toast.LENGTH_LONG).show();
+        }
     }
 }

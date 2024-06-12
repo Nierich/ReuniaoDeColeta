@@ -6,8 +6,18 @@ public class Projeto {
 
     int id;
     String nome;
-    Date data_inicio;
-    Date data_fim;
+    String data_inicio;
+    String data_fim;
+
+    // Construtor vazio
+    public Projeto() {
+    }
+
+    // Novo construtor
+    public Projeto(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 
     public int getId() {
         return id;
@@ -25,19 +35,24 @@ public class Projeto {
         this.nome = nome;
     }
 
-    public Date getData_inicio() {
+    public String getData_inicio() {
         return data_inicio;
     }
 
-    public void setData_inicio(Date data_inicio) {
+    public void setData_inicio(String data_inicio) {
         this.data_inicio = data_inicio;
     }
 
-    public Date getData_fim() {
+    public String getData_fim() {
         return data_fim;
     }
 
-    public void setData_fim(Date data_fim) {
+    public void setData_fim(String data_fim) {
         this.data_fim = data_fim;
     }
+    @Override
+    public String toString() {
+        return nome; // Define como o Spinner irá exibir as categorias (pelo nome)
+    }
+
 }
