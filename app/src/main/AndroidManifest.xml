@@ -35,6 +35,7 @@
         <activity android:name=".TelaProjeto.EditarProjeto" />
         <activity android:name=".TelaRequisito.EditarRequisito" />
         <activity android:name=".TelaInicio" />
+        <activity android:name=".CadastroUsuario" />
 
     </application>
 

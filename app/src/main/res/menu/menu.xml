@@ -14,5 +14,6 @@
             <item android:id="@+id/cadastroRequisito" android:title="Cadastro de requisitos"/>
         </menu>
     </item>
+    <item android:id="@+id/cadastroUsuario" android:title="Cadastro de Usuário" app:showAsAction="never"/>
     <item android:id="@+id/voltar" android:title="Voltar" app:showAsAction="never"/>
 </menu>

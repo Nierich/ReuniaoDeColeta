@@ -3,6 +3,7 @@ package com.example.reuniaodecoleta.TelaProjeto;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.example.reuniaodecoleta.BaseActivity;
 import com.example.reuniaodecoleta.DatabaseManager;
 import com.example.reuniaodecoleta.Entidade.Projeto;
 import com.example.reuniaodecoleta.R;
+import com.example.reuniaodecoleta.TelaInicio;
+import com.example.reuniaodecoleta.TelaRequisito.ListagemRequisito;
 
 public class CadastroProjeto extends BaseActivity {
     private EditText etNome = null;
@@ -59,6 +62,8 @@ public class CadastroProjeto extends BaseActivity {
                     projeto.setData_fim(data_fim);
 
                     salvarProjetoNoBanco(projeto);
+                    Intent intent = new Intent(CadastroProjeto.this, TelaInicio.class);
+                    startActivity(intent);
                 }
             }
         });

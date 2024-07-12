@@ -14,7 +14,7 @@ import com.example.reuniaodecoleta.TelaProjeto.ListagemProjeto;
 import com.example.reuniaodecoleta.TelaProjeto.CadastroProjeto;
 import com.example.reuniaodecoleta.TelaRequisito.ListagemRequisito;
 import com.example.reuniaodecoleta.TelaRequisito.CadastroRequisito;
-
+import com.example.reuniaodecoleta.CadastroUsuario;
 public class BaseActivity extends AppCompatActivity {
 
     @Override
@@ -48,6 +48,10 @@ public class BaseActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.cadastroRequisito) {
             startActivity(new Intent(this, CadastroRequisito.class));
+            Toast.makeText(this, "Menu de Cadastro selecionado", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (item.getItemId() == R.id.cadastroUsuario) {
+            startActivity(new Intent(this, CadastroUsuario.class));
             Toast.makeText(this, "Menu de Cadastro selecionado", Toast.LENGTH_LONG).show();
             return true;
         } else if (item.getItemId() == R.id.voltar) {

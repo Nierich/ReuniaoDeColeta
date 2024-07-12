@@ -25,6 +25,8 @@
     <string name="tv_user">Usuario:</string>
     <string name="tv_senha">Senha:</string>
     <string name="bt_entrar">Entrar</string>
+    <string name="tv_cadastro_usuario">Cadastro de Usuário</string>
+    <string name="bt_criar_user">Criar Usuario</string>
     <string-array name="spinner_tipo_requisito">
         <item>Não-Funcional</item>
         <item>Funcional</item>

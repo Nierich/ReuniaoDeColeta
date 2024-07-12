@@ -5,13 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/myToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BDAADF"
+        tools:ignore="MissingConstraints"/>
+
     <TextView
         android:id="@+id/tv_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
+        android:layout_marginStart="88dp"
         android:layout_marginTop="128dp"
-        android:text="@string/tv_login"
+        android:text="@string/tv_cadastro_usuario"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,9 +59,9 @@
         android:id="@+id/bt_criar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="140dp"
-        android:text="@string/bt_entrar"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="144dp"
+        android:text="@string/bt_criar_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_senha" />
 

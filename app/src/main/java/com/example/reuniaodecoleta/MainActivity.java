@@ -1,6 +1,5 @@
 package com.example.reuniaodecoleta;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         et_user = (EditText) findViewById(R.id.et_usuario);
         et_senha = (EditText) findViewById(R.id.et_senha);
 
-        Button bt_login = findViewById(R.id.bt_entrar);
+        Button bt_login = findViewById(R.id.bt_criar);
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
