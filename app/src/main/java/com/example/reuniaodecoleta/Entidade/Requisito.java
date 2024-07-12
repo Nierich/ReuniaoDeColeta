@@ -13,6 +13,9 @@ public class Requisito {
     String nivel_dificuldade;
     String horas_estimadas;
     String qntd_desenvolvedores;
+    String foto;
+    String latitude;
+    String longitude;
     int projeto_id;
 
 
@@ -79,6 +82,31 @@ public class Requisito {
     public void setQntd_desenvolvedores(String qntd_desenvolvedores) {
         this.qntd_desenvolvedores = qntd_desenvolvedores;
     }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
 
     public int getProjeto_id() {
         return projeto_id;

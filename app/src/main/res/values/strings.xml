@@ -17,6 +17,14 @@
     <string name="nome_Projeto">Projeto:</string>
     <string name="Listagem_projeto">Listagem de projetos</string>
     <string name="Listagem_requisito">Listagem dos requisitos do projeto</string>
+    <string name="bt_alterar">Alterar</string>
+    <string name="editar_projeto">Editar Projeto</string>
+    <string name="bt_alterar_requisito">Alterar requisito</string>
+    <string name="bt_link">Documentação complementar</string>
+    <string name="tv_login">Tela de Login</string>
+    <string name="tv_user">Usuario:</string>
+    <string name="tv_senha">Senha:</string>
+    <string name="bt_entrar">Entrar</string>
     <string-array name="spinner_tipo_requisito">
         <item>Não-Funcional</item>
         <item>Funcional</item>

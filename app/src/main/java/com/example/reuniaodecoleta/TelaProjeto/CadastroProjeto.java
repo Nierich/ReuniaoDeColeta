@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.example.reuniaodecoleta.BaseActivity;
 import com.example.reuniaodecoleta.DatabaseManager;
 import com.example.reuniaodecoleta.Entidade.Projeto;
@@ -35,16 +33,16 @@ public class CadastroProjeto extends BaseActivity {
         setUpToolbar(R.id.myToolbar);
 
         // Inicializa o DatabaseManager e o banco de dados
-        dataBaseManager = new DatabaseManager(this, "aplicacaodb", 1);
+        dataBaseManager = new DatabaseManager(this, "aplicacaodb", 5);
         bancoDeDados = dataBaseManager.getWritableDatabase();
 
 
-        int idCliente = 0;
+
         etNome = findViewById(R.id.et_nome_projeto);
         dataInicio = findViewById(R.id.tv_data_inicio);
         dataFim = findViewById(R.id.tv_data_fim);
 
-        Button criar = findViewById(R.id.bt_criar);
+        Button criar = findViewById(R.id.bt_alterar);
         criar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

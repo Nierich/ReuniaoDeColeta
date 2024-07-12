@@ -157,7 +157,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" />
 
-
             <Button
                 android:id="@+id/btn_tirar_foto1"
                 android:layout_width="wrap_content"
@@ -189,11 +188,11 @@
                 android:scaleType="centerCrop" />
 
             <Button
-                android:id="@+id/bt_criar_requisito"
+                android:id="@+id/bt_alterar_requisito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/bt_criar_requisito" />
+                android:text="@string/bt_alterar_requisito" />
 
         </LinearLayout>
     </ScrollView>

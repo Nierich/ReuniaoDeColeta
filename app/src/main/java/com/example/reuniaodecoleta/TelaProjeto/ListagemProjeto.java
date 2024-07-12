@@ -12,13 +12,14 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.reuniaodecoleta.BaseActivity;
 import com.example.reuniaodecoleta.DatabaseManager;
 import com.example.reuniaodecoleta.R;
 import com.example.reuniaodecoleta.TelaRequisito.ListagemRequisito;
 
 import java.util.ArrayList;
 
-public class ListagemProjeto extends AppCompatActivity {
+public class ListagemProjeto extends BaseActivity {
     private DatabaseManager dataBaseManager = null;
     private SQLiteDatabase bancoDeDados = null;
     private ListView lista = null;
@@ -30,7 +31,9 @@ public class ListagemProjeto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listagem_projeto);
 
-        dataBaseManager = new DatabaseManager(this, "aplicacaodb", 1);
+        setUpToolbar(R.id.myToolbar);
+
+        dataBaseManager = new DatabaseManager(this, "aplicacaodb", 5);
         bancoDeDados = dataBaseManager.getWritableDatabase();
 
         lista = (ListView) findViewById(R.id.lv_lista);
@@ -42,7 +45,7 @@ public class ListagemProjeto extends AppCompatActivity {
 
         ArrayList list = new ArrayList();
         for (int i = 0; i < listaprojeto.getCount(); i++) {
-            list.add("Nome do Projeto " + listaprojeto.getString(listaprojeto.getColumnIndexOrThrow("nome")) +
+            list.add("Nome do Projeto: " + listaprojeto.getString(listaprojeto.getColumnIndexOrThrow("nome")) +
                     "\nData de Inicio: " + listaprojeto.getString(listaprojeto.getColumnIndexOrThrow("data_inicio")) +
                     "\nData de Fim: " + listaprojeto.getString(listaprojeto.getColumnIndexOrThrow("data_fim")));
             listaprojeto.moveToNext();

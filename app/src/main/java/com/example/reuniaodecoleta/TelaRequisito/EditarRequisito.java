@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -35,7 +36,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class CadastroRequisito extends BaseActivity {
+public class EditarRequisito extends BaseActivity {
 
     private EditText etDescricao = null;
     private Spinner spn_tipo = null;
@@ -64,11 +64,10 @@ public class CadastroRequisito extends BaseActivity {
     private ImageView img_foto_1;
     private ImageView img_foto_2;
     private int currentCameraRequest;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastro_requisito);
+        setContentView(R.layout.editar_requisito);
 
         setUpToolbar(R.id.myToolbar);
 
@@ -94,10 +93,48 @@ public class CadastroRequisito extends BaseActivity {
 
         configurarSpinner();
 
-        Button bt_criar_requisito = findViewById(R.id.bt_criar_requisito);
-        bt_criar_requisito.setOnClickListener(new View.OnClickListener() {
+        String codigo = this.getIntent().getStringExtra("id");
+        Cursor cursor = carregaDadoById(Integer.parseInt(codigo));
+
+        etDescricao.setText(cursor.getString(cursor.getColumnIndexOrThrow("descricao")));
+        et_horas.setText(cursor.getString(cursor.getColumnIndexOrThrow("horas_estimadas")));
+        tv_latitude.setText(cursor.getString(cursor.getColumnIndexOrThrow("latitude")));
+        tv_longitude.setText(cursor.getString(cursor.getColumnIndexOrThrow("longitude")));
+
+        // Carregar os valores dos Spinners
+        spn_tipo.setSelection(getSpinnerIndex(spn_tipo, cursor.getString(cursor.getColumnIndexOrThrow("tipo"))));
+        spn_importancia.setSelection(getSpinnerIndex(spn_importancia, cursor.getString(cursor.getColumnIndexOrThrow("nivel_importancia"))));
+        spn_dificuldade.setSelection(getSpinnerIndex(spn_dificuldade, cursor.getString(cursor.getColumnIndexOrThrow("nivel_dificuldade"))));
+        spn_desenvolvedores.setSelection(getSpinnerIndex(spn_desenvolvedores, cursor.getString(cursor.getColumnIndexOrThrow("qntd_desenvolvedores"))));
+
+        // Carregar o projeto selecionado no Spinner
+        int projetoId = cursor.getInt(cursor.getColumnIndexOrThrow("projeto_id"));
+        arrumaProjeto(projetoId);
+
+        // Carregar as fotos
+        byte[] foto1 = cursor.getBlob(cursor.getColumnIndexOrThrow("foto1"));
+        if (foto1 != null) {
+            Bitmap bitmap1 = BitmapFactory.decodeByteArray(foto1, 0, foto1.length);
+            img_foto_1.setImageBitmap(bitmap1);
+        }
+        byte[] foto2 = cursor.getBlob(cursor.getColumnIndexOrThrow("foto2"));
+        if (foto2 != null) {
+            Bitmap bitmap2 = BitmapFactory.decodeByteArray(foto2, 0, foto2.length);
+            img_foto_2.setImageBitmap(bitmap2);
+        }
+
+
+
+        Button bt_atualizar_requisito = findViewById(R.id.bt_alterar_requisito);
+        bt_atualizar_requisito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bancoDeDados = dataBaseManager.getWritableDatabase();
+                ContentValues valores;
+                String where;
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                String currentDateAndTime = sdf.format(new Date());
                 String descricao = etDescricao.getText().toString();
                 String tipo = spn_tipo.getSelectedItem().toString();
                 String importancia = spn_importancia.getSelectedItem().toString();
@@ -106,25 +143,41 @@ public class CadastroRequisito extends BaseActivity {
                 String desenvolvedores = spn_desenvolvedores.getSelectedItem().toString();
                 String latitude = tv_latitude.getText().toString();
                 String longitude = tv_longitude.getText().toString();
+                Projeto projetoSelecionado = (Projeto) spn_projeto.getSelectedItem();
 
                 if (descricao.isEmpty() || horas.isEmpty()) {
-                    Toast.makeText(CadastroRequisito.this, "Por favor, preencha todos os campos!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditarRequisito.this, "Por favor, preencha todos os campos!", Toast.LENGTH_LONG).show();
                 } else {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-                    String currentDateAndTime = sdf.format(new Date());
+                    valores = new ContentValues();
+                    valores.put("data_hora_registro", currentDateAndTime);
+                    valores.put("descricao", descricao);
+                    valores.put("tipo", tipo);
+                    valores.put("nivel_importancia", importancia);
+                    valores.put("nivel_dificuldade", dificuldade);
+                    valores.put("horas_estimadas", horas);
+                    valores.put("qntd_desenvolvedores", desenvolvedores);
+                    valores.put("latitude", latitude);
+                    valores.put("longitude", longitude);
+                    valores.put("projeto_id", projetoSelecionado.getId());
 
-                    Requisito requisito = new Requisito();
-                    requisito.setData_hora_registro(currentDateAndTime);
-                    requisito.setDescricao(descricao);
-                    requisito.setTipo(tipo);
-                    requisito.setNivel_importancia(importancia);
-                    requisito.setNivel_dificuldade(dificuldade);
-                    requisito.setHoras_estimadas(horas);
-                    requisito.setQntd_desenvolvedores(desenvolvedores);
-                    requisito.setLatitude(latitude);
-                    requisito.setLongitude(longitude);
+                    // Insere a imagem 1 convertida em array de bytes
+                    Bitmap bitmap = ((BitmapDrawable) img_foto_1.getDrawable()).getBitmap();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray1 = stream.toByteArray();
+                    valores.put("foto1", byteArray1);
 
-                    salvarRequisitoNoBanco(requisito);
+                    // Insere a imagem 2 convertida em array de bytes
+                    Bitmap bitmap2 = ((BitmapDrawable) img_foto_2.getDrawable()).getBitmap();
+                    ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+                    bitmap2.compress(Bitmap.CompressFormat.PNG, 100, stream2);
+                    byte[] byteArray2 = stream2.toByteArray();
+                    valores.put("foto2", byteArray2);
+
+                    where = "id =" + cursor.getString(cursor.getColumnIndexOrThrow("id"));
+
+                    bancoDeDados.update("requisito", valores, where, null);
+                    abrirTelaListagem();
                 }
             }
         });
@@ -148,50 +201,6 @@ public class CadastroRequisito extends BaseActivity {
         });
     }
 
-    private void salvarRequisitoNoBanco(Requisito requisito) {
-        ContentValues valores = criarContentValuesParaRequisito(requisito);
-
-        long resultado = bancoDeDados.insert("requisito", null, valores);
-
-        if (resultado != -1) {
-            Toast.makeText(CadastroRequisito.this, "Requisito criado com sucesso!", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(CadastroRequisito.this, "Erro ao criar requisito!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private ContentValues criarContentValuesParaRequisito(Requisito requisito) {
-        ContentValues valores = new ContentValues();
-        valores.put("data_hora_registro", requisito.getData_hora_registro());
-        valores.put("descricao", requisito.getDescricao());
-        valores.put("tipo", requisito.getTipo());
-        valores.put("nivel_importancia", requisito.getNivel_importancia());
-        valores.put("nivel_dificuldade", requisito.getNivel_dificuldade());
-        valores.put("horas_estimadas", requisito.getHoras_estimadas());
-        valores.put("qntd_desenvolvedores", requisito.getQntd_desenvolvedores());
-        valores.put("latitude", requisito.getLatitude());
-        valores.put("longitude", requisito.getLongitude());
-
-        // Insere o projeto selecionado pelo usuário
-        Projeto projetoSelecionado = (Projeto) spn_projeto.getSelectedItem();
-        valores.put("projeto_id", projetoSelecionado.getId());
-
-        // Insere a imagem 1 convertida em array de bytes
-        Bitmap bitmap = ((BitmapDrawable) img_foto_1.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray1 = stream.toByteArray();
-        valores.put("foto1", byteArray1);
-
-        // Insere a imagem 2 convertida em array de bytes
-        Bitmap bitmap2 = ((BitmapDrawable) img_foto_2.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
-        bitmap2.compress(Bitmap.CompressFormat.PNG, 100, stream2);
-        byte[] byteArray2 = stream2.toByteArray();
-        valores.put("foto2", byteArray2);
-
-        return valores;
-    }
 
     public Cursor fazerConsulta() {
         SQLiteDatabase db = dataBaseManager.getReadableDatabase();
@@ -250,7 +259,7 @@ public class CadastroRequisito extends BaseActivity {
                         tv_latitude.setText(String.format(Locale.getDefault(), "%.6f", location.getLatitude()));
                         tv_longitude.setText(String.format(Locale.getDefault(), "%.6f", location.getLongitude()));
                     } else {
-                        Toast.makeText(CadastroRequisito.this, "Localização não encontrada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditarRequisito.this, "Localização não encontrada", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -303,4 +312,43 @@ public class CadastroRequisito extends BaseActivity {
             }
         }
     }
+        public Cursor carregaDadoById(int id){
+            String[] campos_item = {"id", "descricao", "data_hora_registro", "tipo", "nivel_importancia", "nivel_dificuldade",
+                    "horas_estimadas", "qntd_desenvolvedores", "latitude", "longitude", "foto1", "foto2", "projeto_id"};
+            String where =  "id =" + id;
+            bancoDeDados = dataBaseManager.getReadableDatabase();
+            Cursor cursor = bancoDeDados.query("requisito", campos_item,where, null, null, null, null, null);
+
+            if(cursor!=null){
+                cursor.moveToFirst();
+            }
+            bancoDeDados.close();
+            return cursor;
+        }
+
+
+    private int getSpinnerIndex(Spinner spinner, String value) {
+        ArrayAdapter adapter = (ArrayAdapter) spinner.getAdapter();
+        return adapter.getPosition(value);
+    }
+    public void abrirTelaListagem(){
+
+        Intent lista = new Intent(this, ListagemProjeto.class);
+        startActivity(lista);
+
+    }
+
+    public void arrumaProjeto(int id){
+        Projeto projetoSelecionado = null;
+        for (Projeto projeto : projetoList) {
+            if (projeto.getId() == id) {
+                projetoSelecionado = projeto;
+                break;
+            }
+        }
+        if (projetoSelecionado != null) {
+            spn_projeto.setSelection(((ArrayAdapter<Projeto>) spn_projeto.getAdapter()).getPosition(projetoSelecionado));
+        }
+    }
+
 }
